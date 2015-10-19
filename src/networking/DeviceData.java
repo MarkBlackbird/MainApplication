@@ -73,4 +73,51 @@ public class DeviceData {
             }
         }
     }
+    
+    public int castDeviceCodeToInt(DeviceCode devCode)
+    {
+        switch(devCode)
+        {
+            case UNKNOWN:
+            {
+                return 0;
+            }
+            case TERMOMETER:
+            {
+                return 1;
+            }
+            case HUMIDITY_METER:
+            {
+                return 2;
+            }
+            case CARDIOTOOL:
+            {
+                return 3;
+            }
+            case BIOELECTRIC_MEASUREMENT:
+            {
+                return 4;
+            }
+            case ATMOSPHERE_SENSOR:
+            {
+                return 5;
+            }
+            case MALFUNCTION_SENSOR:
+            {
+                return 6;
+            }
+            case ALIVE_SENSOR:
+            {
+                return 7;
+            }
+            case ASSISTANCE_DRIVE:
+            {
+                return 8;
+            }
+            default:
+            {
+                return 9;
+            }
+        }
+    }
 }
