@@ -25,6 +25,7 @@ public class DeviceData {
         locationX=-1;
         locationY=-1;
         deviceCode=DeviceCode.UNKNOWN;
+        deviceName="Name";
         ID=0; //Not valid. Needs adjustment
     }
     public DeviceCode castIntToDeviceCode(int num)
