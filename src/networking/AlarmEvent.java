@@ -42,7 +42,7 @@ public class AlarmEvent {
         alarmCode=ac;
         magnitude=mag;
     }
-    public AlarmCode castIntToAlarmCode(int num)
+    public static AlarmCode castIntToAlarmCode(int num)
     {
         switch(num)
         {
@@ -169,7 +169,7 @@ public class AlarmEvent {
         }
     }
     
-    public int castAlarmCodeToInt(AlarmCode devCode)
+    public static int castAlarmCodeToInt(AlarmCode devCode)
     {
         switch(devCode)
         {

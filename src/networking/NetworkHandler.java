@@ -52,12 +52,9 @@ public class NetworkHandler extends Thread{
                 serverSocket = new ServerSocket(portNumber);
                 clientSocket = serverSocket.accept();
                 out = new DataOutputStream(clientSocket.getOutputStream());
-                //Thread.sleep(100);
                 out.writeInt(nextFreePort);
-                //Thread.sleep(100);
                 speakerToPick = new Speaker(nextFreePort++);
                 serverSocket.close();
-                //in = new DataInputStream(clientSocket.getInputStream());
             }
             }catch(Exception e){}
         }
