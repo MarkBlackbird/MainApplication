@@ -144,7 +144,8 @@ public class Speaker extends Thread{
                     }
                  }
             } catch (IOException ex) {
-                Logger.getLogger(Speaker.class.getName()).log(Level.SEVERE, null, ex);
+                on=false;
+                new AlarmEvent(AlarmEvent.AlarmCode.LONG_DELAY);
             }
         }
     }

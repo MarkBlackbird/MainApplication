@@ -10,6 +10,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import networking.AlarmEvent.AlarmCode;
 
 /**
  *
@@ -21,7 +22,7 @@ public class AliveChecker extends Thread{
         //new Exception to handle situation when there is no response
     }
     Speaker parent;
-    boolean on=true,echoed=false;
+    boolean on=true,echoed=false,warning=false;
     long delay;
     public AliveChecker (Speaker parent)
     {
@@ -46,12 +47,19 @@ public class AliveChecker extends Thread{
                 Thread.sleep(5000);
                 if(echoed)
                 {
-                    System.out.println(delay);
+                    //System.out.println(delay);
                 }else{
                     //throw new NoResponseException();
                 }
             } catch (IOException ex) {
-                Logger.getLogger(AliveChecker.class.getName()).log(Level.SEVERE, null, ex);
+                if(warning)
+                {
+                    on=false;
+                    new AlarmEvent(AlarmCode.LOST);
+                }else{
+                    warning=true;
+                    new AlarmEvent(AlarmCode.LONG_DELAY);
+                }
             } catch (InterruptedException ex) {
                 Logger.getLogger(AliveChecker.class.getName()).log(Level.SEVERE, null, ex);
             }

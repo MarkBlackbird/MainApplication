@@ -17,8 +17,8 @@ public class AlarmEvent {
         FLOOD, RADIATION, DATA_CORRUPTED, BLOOD_FLOW,
         SATURATION, BODY_TEMPERATURE, PATIENT_ELECTROCUTTED, ABNORMAL_ECG,
         ABNORMAL_EEG, ABNORMAL_EOG, ABNORMAL_EMG, CRITICAL_DEVICE_FAILURE,
-        RISK_OF_DEATH, DEATH, LONG_DELAY, DEVICE_DISCONNECTED_BY_USER, 
-        PATIENT_ASKS_FOR_ASSISTANCE
+        RISK_OF_DEATH, DEATH, LONG_DELAY, DEVICE_DISCONNECTED_BY_USER,
+        PATIENT_ASKS_FOR_ASSISTANCE, LOST
     }
     int [] magnitude;
     AlarmCode alarmCode;
@@ -36,11 +36,13 @@ public class AlarmEvent {
     {
         alarmCode=ac;
         magnitude=null;
+        System.out.println(ac.name());
     }
     public AlarmEvent(AlarmCode ac,int []mag)
     {
         alarmCode=ac;
         magnitude=mag;
+        System.out.println(ac.name());
     }
     public static AlarmCode castIntToAlarmCode(int num)
     {
@@ -161,6 +163,10 @@ public class AlarmEvent {
             case 28:
             {
                 return AlarmCode.PATIENT_ASKS_FOR_ASSISTANCE;
+            }
+            case 29:
+            {
+                return AlarmCode.LOST;
             }
             default:
             {
@@ -288,6 +294,10 @@ public class AlarmEvent {
             case PATIENT_ASKS_FOR_ASSISTANCE:
             {
                 return 28;
+            }
+            case LOST:
+            {
+                return 29;
             }
             default:
             {
