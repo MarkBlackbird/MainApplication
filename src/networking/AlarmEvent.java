@@ -5,11 +5,15 @@
  */
 package networking;
 
+import graphicalinterface.MainFrame;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author kosma
  */
-public class AlarmEvent {
+public class AlarmEvent{
     public enum AlarmCode{
         UNKNOWN, TEMPERATURE, HUMIDITY, LOW_VOLTAGE,
         LOW_MEMORY, HR, ATM_PRESSURE, BLOOD_PRESSURE,
@@ -22,27 +26,49 @@ public class AlarmEvent {
     }
     int [] magnitude;
     AlarmCode alarmCode;
-    public AlarmEvent()
+    MainFrame mf;
+    public AlarmEvent(DeviceData origin, MainFrame mf)
     {
+        this.mf=mf;
+        if(origin==null)
+            JOptionPane.showMessageDialog(mf,"UNKNOWN from unknown device");
+        else
+        {
+            JOptionPane.showMessageDialog(mf,"UNKNOWN from device: "+origin.deviceName);
+        }
         alarmCode=AlarmCode.UNKNOWN;
         magnitude=null;
     }
-    public AlarmEvent(int []mag)
+    public AlarmEvent(DeviceData origin, MainFrame mf,AlarmCode ac)
     {
-        alarmCode=AlarmCode.UNKNOWN;
-        magnitude=mag;
-    }
-    public AlarmEvent(AlarmCode ac)
-    {
+        this.mf=mf;
         alarmCode=ac;
         magnitude=null;
         System.out.println(ac.name());
+        if(origin==null)
+            JOptionPane.showMessageDialog(mf,ac.name()+" from unknown device");
+        else
+        {
+            JOptionPane.showMessageDialog(mf,ac.name()+" from device: "+origin.deviceName);
+        }
     }
-    public AlarmEvent(AlarmCode ac,int []mag)
+    public AlarmEvent(DeviceData origin, MainFrame mf,AlarmCode ac,int []mag)
     {
+        this.mf=mf;
         alarmCode=ac;
         magnitude=mag;
         System.out.println(ac.name());
+        String magnitude="";
+        for(int i=0;i<mag.length;i++)
+        {
+            magnitude=magnitude+mag[i];
+        }
+        if(origin==null)
+            JOptionPane.showMessageDialog(mf,ac.name()+" of magnitude "+magnitude+" from unknown device");
+        else
+        {
+            JOptionPane.showMessageDialog(mf,ac.name()+" of magnitude "+magnitude+" from device: "+origin.deviceName);
+        }
     }
     public static AlarmCode castIntToAlarmCode(int num)
     {

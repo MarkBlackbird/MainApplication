@@ -5,11 +5,14 @@
  */
 package networking;
 
+import graphicalinterface.MapPanel;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -21,25 +24,56 @@ public class NetworkHandler extends Thread{
     boolean connectionallowed=true,on=true;
     ServerSocket serverSocket;
     Socket clientSocket;
-    int portNumber, nextFreePort;
-    Speaker speakerToPick=null;
-    public NetworkHandler(int port)
+    int portNumber;
+    List<Speaker> speakers=new ArrayList<Speaker>();
+    MapPanel mp;
+    public NetworkHandler(int port, MapPanel mp)
     {
         portNumber=port;
-        nextFreePort=port+1;
+        this.mp=mp;
         start();
     }
     public void setConAll (boolean p)
     {
         connectionallowed=p;
     }
+    public void saveData()
+    {
+        for(int i=0;i<speakers.size();i++)
+        {
+            mp.dif.devmem.save(speakers.get(i).deviceData);
+        }
+        mp.dif.devmem.saveLinkList();
+    }
     public void close() throws IOException
     {
+        saveData();
         on=false;
         if(serverSocket!=null)
         {
             serverSocket.close();
         }
+        for(int i=0;i<speakers.size();i++)
+        {
+            speakers.get(i).close();
+        }
+    }
+    private int findNextAvaiblePort()
+    {
+        int nextFreePort;
+        nextFreePort=portNumber+1;
+        int it=0;
+        while(it<speakers.size())
+        {
+            if(speakers.get(it).portNumber==nextFreePort)
+            {
+                nextFreePort++;
+                it=0;
+            }else{
+                it++;
+            }
+        }
+        return nextFreePort;
     }
     @Override
     public void run()
@@ -52,8 +86,9 @@ public class NetworkHandler extends Thread{
                 serverSocket = new ServerSocket(portNumber);
                 clientSocket = serverSocket.accept();
                 out = new DataOutputStream(clientSocket.getOutputStream());
+                int nextFreePort=findNextAvaiblePort();
                 out.writeInt(nextFreePort);
-                speakerToPick = new Speaker(nextFreePort++);
+                speakers.add(new Speaker(nextFreePort++,mp,this));
                 serverSocket.close();
             }
             }catch(Exception e){}

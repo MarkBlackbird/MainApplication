@@ -14,10 +14,10 @@ public class DeviceData {
         UNKNOWN, TERMOMETER, HUMIDITY_METER, CARDIOTOOL, BIOELECTRIC_MEASUREMENT,
         ATMOSPHERE_SENSOR, MALFUNCTION_SENSOR, ALIVE_SENSOR, ASSISTANCE_DRIVE
     }
-    int ID;
-    String deviceName;
-    DeviceCode deviceCode;
-    int locationX,locationY;
+    public int ID;
+    public String deviceName;
+    public DeviceCode deviceCode;
+    public int locationX,locationY;
     long lastTransmission;
     public DeviceData()
     {
@@ -28,7 +28,7 @@ public class DeviceData {
         deviceName="Name";
         ID=0; //Not valid. Needs adjustment
     }
-    public DeviceCode castIntToDeviceCode(int num)
+    public static DeviceCode castIntToDeviceCode(int num)
     {
         switch(num)
         {

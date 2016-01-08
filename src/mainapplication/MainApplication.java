@@ -5,7 +5,7 @@
  */
 package mainapplication;
 
-import networking.NetworkHandler;
+import graphicalinterface.MainFrame;
 
 /**
  *
@@ -17,7 +17,7 @@ public class MainApplication {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        NetworkHandler nh = new NetworkHandler(10800);
+        MainFrame mf = new MainFrame();
     }
     
 }

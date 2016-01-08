@@ -5,6 +5,7 @@
  */
 package networking;
 
+import graphicalinterface.MapPanel;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -21,32 +22,60 @@ import java.util.logging.Logger;
  */
 public class Speaker extends Thread{
 
+    public class ConformityFailureException extends Exception
+    {
+        
+    }
     DataOutputStream out;
     DataInputStream in;
     boolean connectionallowed=true,on=true, echo=false;
     ServerSocket serverSocket;
     Socket clientSocket;
-    int portNumber;
+    public int portNumber;
     long time;
-    DeviceData deviceData;
+    public DeviceData deviceData;
     AliveChecker aliche;
+    NetworkHandler nh;
+    public MapPanel mp;
     List<AlarmEvent> alarmList = new ArrayList<AlarmEvent>();
 
-    public Speaker(int port) throws IOException
+    public Speaker(int port, MapPanel mp,NetworkHandler nh) throws IOException, ConformityFailureException
     {
+        this.mp=mp;
+        this.nh=nh;
+        boolean newOne=false;
         portNumber=port;
         serverSocket = new ServerSocket(portNumber);
         clientSocket = serverSocket.accept();
         out = new DataOutputStream(clientSocket.getOutputStream());
         in = new DataInputStream(clientSocket.getInputStream());
-        deviceData=new DeviceData();
-        deviceData.ID = in.readInt();
-        deviceData.deviceCode = deviceData.castIntToDeviceCode(in.readInt());
-        deviceData.deviceName = in.readUTF();
+        
+        int ID = in.readInt();
+        deviceData=mp.dif.devmem.checkMemory(ID);
+        if(deviceData==null)
+        {
+            deviceData=new DeviceData();
+            deviceData.ID = ID;
+            deviceData.deviceCode = deviceData.castIntToDeviceCode(in.readInt());
+            deviceData.deviceName = in.readUTF();
+            newOne=true;
+        }else{
+            if(deviceData.castIntToDeviceCode(in.readInt())!=deviceData.deviceCode)
+            {
+                throw new ConformityFailureException();
+            }
+            if(0<deviceData.deviceName.compareTo(in.readUTF()))
+            {
+                throw new ConformityFailureException();
+            }
+            mp.addExisting(this);
+        }
         deviceData.lastTransmission=System.currentTimeMillis();
         start();
         aliche=new AliveChecker(this);
         aliche.start();
+        if(newOne)
+            mp.newArrival(this);
         System.out.println("Connected with "+ deviceData.deviceName +" at port "+port);
     }
     public long sendEcho () throws IOException
@@ -97,11 +126,25 @@ public class Speaker extends Thread{
     }
     public void close() throws IOException
     {
+        int it=0;
+        while(it<nh.speakers.size())
+        {
+            if(nh.speakers.get(it)!=this)
+            {
+                it++;
+            }else{
+                break;
+            }
+        }
+        nh.speakers.remove(it);
         on=false;
         if(serverSocket!=null)
         {
             serverSocket.close();
         }
+        aliche.close();
+        on=false;
+        //sumthing sumthing save device
     }
     @Override
     public void run()
@@ -123,7 +166,7 @@ public class Speaker extends Thread{
                         {
                             magnitude[i]=in.readInt();
                         }
-                        alarmList.add(new AlarmEvent(AlarmEvent.castIntToAlarmCode(alarmType),magnitude));
+                        alarmList.add(new AlarmEvent(deviceData,mp.parent,AlarmEvent.castIntToAlarmCode(alarmType),magnitude));
                         break;
                     }
                     case 2: //next is String, Right now not used
@@ -145,7 +188,7 @@ public class Speaker extends Thread{
                  }
             } catch (IOException ex) {
                 on=false;
-                new AlarmEvent(AlarmEvent.AlarmCode.LONG_DELAY);
+                alarmList.add(new AlarmEvent(deviceData,mp.parent,AlarmEvent.AlarmCode.LONG_DELAY));
             }
         }
     }

@@ -55,10 +55,15 @@ public class AliveChecker extends Thread{
                 if(warning)
                 {
                     on=false;
-                    new AlarmEvent(AlarmCode.LOST);
+                    new AlarmEvent(parent.deviceData,parent.mp.parent,AlarmCode.LOST);
+                    try {
+                        parent.close();
+                    } catch (IOException ex1) {
+                        Logger.getLogger(AliveChecker.class.getName()).log(Level.SEVERE, null, ex1);
+                    }
                 }else{
                     warning=true;
-                    new AlarmEvent(AlarmCode.LONG_DELAY);
+                    new AlarmEvent(parent.deviceData,parent.mp.parent,AlarmCode.LONG_DELAY);
                 }
             } catch (InterruptedException ex) {
                 Logger.getLogger(AliveChecker.class.getName()).log(Level.SEVERE, null, ex);

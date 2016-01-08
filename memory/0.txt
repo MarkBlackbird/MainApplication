@@ -1,0 +1,4 @@
+Name=Name
+deviceCode=UNKNOWN
+posX=4
+posY=4
