@@ -61,6 +61,7 @@ public class DeviceMemory {
                     // Always wrap FileReader in BufferedReader.
                     bufferedReader2 = new BufferedReader(fileReader2);
                     deviceList.add(new DeviceData());
+                    deviceList.get(deviceList.size()-1).inUse=false;
                     listToSave.add(deviceList.get(deviceList.size()-1));
                     deviceList.get(deviceList.size()-1).ID=Integer.parseInt(line);
                     while((line2 = bufferedReader2.readLine()) != null)

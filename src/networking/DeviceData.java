@@ -19,8 +19,10 @@ public class DeviceData {
     public DeviceCode deviceCode;
     public int locationX,locationY;
     long lastTransmission;
+    public boolean inUse;
     public DeviceData()
     {
+        inUse=true;
         lastTransmission=0;
         locationX=-1;
         locationY=-1;

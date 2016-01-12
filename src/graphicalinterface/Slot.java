@@ -7,8 +7,11 @@ package graphicalinterface;
 
 import datainputandhandling.DataFileInput;
 import java.awt.Insets;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import networking.AlarmEvent;
 import networking.DeviceData;
 import networking.Speaker;
 
@@ -20,7 +23,7 @@ public class Slot extends JButton{
     DataFileInput dif;
     int posX, posY;
     boolean active=false, locked=true;
-    public DeviceData sensor;
+    public List<DeviceData> sensor = new ArrayList<DeviceData>();
     public Slot(DataFileInput dif, int posX, int posY)
     {
         this.dif=dif;
@@ -71,11 +74,11 @@ public class Slot extends JButton{
     }
     public void activate(Speaker sp)
     {
-        if(!active&&(!locked))
+        if(!locked)
         {
             active=true;
             locked=true;
-            sensor=sp.deviceData;
+            sensor.add(sp.deviceData);
             sp.deviceData.locationX=posX;
             sp.deviceData.locationY=posY;
             setIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[1]));
@@ -85,7 +88,7 @@ public class Slot extends JButton{
     public void forceActivate(Speaker sp)
     {
         active=true;
-        sensor=sp.deviceData;
+        sensor.add(sp.deviceData);
         setIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[1]));
         setPressedIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[1]));
         setRolloverIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[1]));
@@ -93,9 +96,12 @@ public class Slot extends JButton{
     public void deActivate(Speaker sp)
     {
         active=false;
-        sensor=null;
-        setIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[0]));
-        setPressedIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[0]));
-        setRolloverIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[0]));
+        sensor.remove(sp.deviceData);
+        if(sensor.size()==0)
+        {
+            setIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[0]));
+            setPressedIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[0]));
+            setRolloverIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[0]));
+        }
     }
 }

@@ -60,6 +60,12 @@ public class Speaker extends Thread{
             deviceData.deviceName = in.readUTF();
             newOne=true;
         }else{
+            if(deviceData.inUse)
+            {
+                throw new ConformityFailureException();
+            }else{
+                deviceData.inUse=true;
+            }
             if(deviceData.castIntToDeviceCode(in.readInt())!=deviceData.deviceCode)
             {
                 throw new ConformityFailureException();

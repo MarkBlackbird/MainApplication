@@ -32,11 +32,7 @@ public class MainFrame extends JFrame implements WindowListener{
     public MainFrame()
     {
         DataFileInput dif = new DataFileInput("data.txt");
-        sizeX=dif.numX*88+100;//88 is size of icon, 100 is for menuPanel
-        sizeY=dif.numY*88;
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        setSize(sizeX,sizeY);
-        setLocation(screenSize.width/2-sizeX/2, screenSize.height/2-sizeY/2);
+        
         mapPanel = new MapPanel(this,dif);//todo create custom class
         menuPanel = new JPanel();//todo create custom class
         
@@ -46,6 +42,12 @@ public class MainFrame extends JFrame implements WindowListener{
         setLayout(new BorderLayout());
         add(mapPanel, BorderLayout.CENTER);
         add(menuPanel, BorderLayout.EAST);
+        
+        pack();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension dialogSize = getSize();
+        setLocation(screenSize.width/2-dialogSize.width/2, screenSize.height/2-dialogSize.height/2);
+        
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         addWindowListener(this);
