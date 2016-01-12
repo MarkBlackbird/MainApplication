@@ -1,4 +1,4 @@
 Name=Name
 deviceCode=UNKNOWN
-posX=4
-posY=4
+posX=3
+posY=2

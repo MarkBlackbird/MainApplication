@@ -72,13 +72,13 @@ public class Speaker extends Thread{
         }
         deviceData.lastTransmission=System.currentTimeMillis();
         start();
-        aliche=new AliveChecker(this);
-        aliche.start();
+        //aliche=new AliveChecker(this); useless junk do not use
+        //aliche.start();
         if(newOne)
             mp.newArrival(this);
         System.out.println("Connected with "+ deviceData.deviceName +" at port "+port);
     }
-    public long sendEcho () throws IOException
+    public void sendEcho () throws IOException
     {
         if(out!=null)
         {
@@ -86,7 +86,6 @@ public class Speaker extends Thread{
             time = System.currentTimeMillis();
             out.writeInt(-1); //echo
         }
-        return -1; //Failed
     }
     public long receiveEcho () throws IOException
     {
@@ -126,6 +125,8 @@ public class Speaker extends Thread{
     }
     public void close() throws IOException
     {
+        mp.dif.devmem.save(deviceData);
+        mp.jbArray[deviceData.locationX][deviceData.locationY].deActivate(this);
         int it=0;
         while(it<nh.speakers.size())
         {
@@ -142,7 +143,7 @@ public class Speaker extends Thread{
         {
             serverSocket.close();
         }
-        aliche.close();
+        //aliche.close();
         on=false;
         //sumthing sumthing save device
     }
@@ -188,7 +189,12 @@ public class Speaker extends Thread{
                  }
             } catch (IOException ex) {
                 on=false;
-                alarmList.add(new AlarmEvent(deviceData,mp.parent,AlarmEvent.AlarmCode.LONG_DELAY));
+                alarmList.add(new AlarmEvent(deviceData,mp.parent,AlarmEvent.AlarmCode.LOST));
+                try {
+                    close();
+                } catch (IOException ex1) {
+                    //Logger.getLogger(Speaker.class.getName()).log(Level.SEVERE, null, ex1);
+                }
             }
         }
     }

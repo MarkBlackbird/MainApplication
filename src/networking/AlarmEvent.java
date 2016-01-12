@@ -5,6 +5,7 @@
  */
 package networking;
 
+import graphicalinterface.AlarmDialog;
 import graphicalinterface.MainFrame;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -31,10 +32,10 @@ public class AlarmEvent{
     {
         this.mf=mf;
         if(origin==null)
-            JOptionPane.showMessageDialog(mf,"UNKNOWN from unknown device");
+            new AlarmDialog(mf,"UNKNOWN from unknown device");
         else
         {
-            JOptionPane.showMessageDialog(mf,"UNKNOWN from device: "+origin.deviceName);
+            new AlarmDialog(mf,"UNKNOWN from device: "+origin.deviceName);
         }
         alarmCode=AlarmCode.UNKNOWN;
         magnitude=null;
@@ -46,10 +47,10 @@ public class AlarmEvent{
         magnitude=null;
         System.out.println(ac.name());
         if(origin==null)
-            JOptionPane.showMessageDialog(mf,ac.name()+" from unknown device");
+            new AlarmDialog(mf,ac.name()+" from unknown device");
         else
         {
-            JOptionPane.showMessageDialog(mf,ac.name()+" from device: "+origin.deviceName);
+            new AlarmDialog(mf,ac.name()+" from device: "+origin.deviceName);
         }
     }
     public AlarmEvent(DeviceData origin, MainFrame mf,AlarmCode ac,int []mag)
@@ -63,11 +64,12 @@ public class AlarmEvent{
         {
             magnitude=magnitude+mag[i];
         }
+        
         if(origin==null)
-            JOptionPane.showMessageDialog(mf,ac.name()+" of magnitude "+magnitude+" from unknown device");
+            new AlarmDialog(mf,ac.name()+" of magnitude "+magnitude+" from unknown device");
         else
         {
-            JOptionPane.showMessageDialog(mf,ac.name()+" of magnitude "+magnitude+" from device: "+origin.deviceName);
+            new AlarmDialog(mf,ac.name()+" of magnitude "+magnitude+" from device: "+origin.deviceName);
         }
     }
     public static AlarmCode castIntToAlarmCode(int num)

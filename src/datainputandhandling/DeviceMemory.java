@@ -61,6 +61,7 @@ public class DeviceMemory {
                     // Always wrap FileReader in BufferedReader.
                     bufferedReader2 = new BufferedReader(fileReader2);
                     deviceList.add(new DeviceData());
+                    listToSave.add(deviceList.get(deviceList.size()-1));
                     deviceList.get(deviceList.size()-1).ID=Integer.parseInt(line);
                     while((line2 = bufferedReader2.readLine()) != null)
                     {
@@ -112,25 +113,28 @@ public class DeviceMemory {
     }
     public void save (DeviceData dd)
     {
-        listToSave.add(dd);
-        try {
-            File file = new File(context+dd.ID+".txt");
+        if(checkSaveMemory(dd.ID)==null)
+        {
+            listToSave.add(dd);
+            try {
+                File file = new File(context+dd.ID+".txt");
 
-            // if file doesnt exists, then create it
-            if (!file.exists()) {
-		file.createNewFile();
+                // if file doesnt exists, then create it
+                if (!file.exists()) {
+                    file.createNewFile();
+                }
+
+                FileWriter fw = new FileWriter(file.getAbsoluteFile());
+                BufferedWriter bw = new BufferedWriter(fw);
+                bw.write("Name="+dd.deviceName+"\r\n");
+                bw.write("deviceCode="+dd.deviceCode+"\r\n");
+                bw.write("posX="+dd.locationX+"\r\n");
+                bw.write("posY="+dd.locationY);
+                bw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-            FileWriter fw = new FileWriter(file.getAbsoluteFile());
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write("Name="+dd.deviceName+"\r\n");
-            bw.write("deviceCode="+dd.deviceCode+"\r\n");
-            bw.write("posX="+dd.locationX+"\r\n");
-            bw.write("posY="+dd.locationY);
-            bw.close();
-	} catch (IOException e) {
-            e.printStackTrace();
-	}
+        }
     }
     public void saveLinkList()
     {
@@ -158,6 +162,17 @@ public class DeviceMemory {
             if(deviceList.get(i).ID==ID)
             {
                 return deviceList.get(i);
+            }
+        }
+        return null;
+    }
+    public DeviceData checkSaveMemory (int ID)
+    {
+        for(int i=0;i<listToSave.size();i++)
+        {
+            if(listToSave.get(i).ID==ID)
+            {
+                return listToSave.get(i);
             }
         }
         return null;

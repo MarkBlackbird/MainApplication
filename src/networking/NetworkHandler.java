@@ -47,7 +47,7 @@ public class NetworkHandler extends Thread{
     }
     public void close() throws IOException
     {
-        saveData();
+        //saveData();
         on=false;
         if(serverSocket!=null)
         {
@@ -57,6 +57,7 @@ public class NetworkHandler extends Thread{
         {
             speakers.get(i).close();
         }
+        mp.dif.devmem.saveLinkList();
     }
     private int findNextAvaiblePort()
     {

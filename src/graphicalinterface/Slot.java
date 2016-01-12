@@ -49,18 +49,24 @@ public class Slot extends JButton{
     }
     public void unlock()
     {
-        if((!active)&&(locked))
+        if(locked)
         {
             locked=false;
-            setRolloverIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[1]));
+            if(!active)
+            {
+                setRolloverIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[1]));
+            }
         }
     }
     public void lock()
     {
-        if(!active&&(!locked))
+        if(!locked)
         {
             locked=true;
-            setRolloverIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[0]));
+            if(!active)
+            {
+                setRolloverIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[0]));
+            }
         }
     }
     public void activate(Speaker sp)
@@ -82,5 +88,14 @@ public class Slot extends JButton{
         sensor=sp.deviceData;
         setIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[1]));
         setPressedIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[1]));
+        setRolloverIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[1]));
+    }
+    public void deActivate(Speaker sp)
+    {
+        active=false;
+        sensor=null;
+        setIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[0]));
+        setPressedIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[0]));
+        setRolloverIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[0]));
     }
 }
