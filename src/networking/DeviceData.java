@@ -20,8 +20,20 @@ public class DeviceData {
     public int locationX,locationY;
     long lastTransmission;
     public boolean inUse;
+    public Speaker parent=null;
     public DeviceData()
     {
+        inUse=true;
+        lastTransmission=0;
+        locationX=-1;
+        locationY=-1;
+        deviceCode=DeviceCode.UNKNOWN;
+        deviceName="Name";
+        ID=0; //Not valid. Needs adjustment
+    }
+    public DeviceData(Speaker sp)
+    {
+        parent=sp;
         inUse=true;
         lastTransmission=0;
         locationX=-1;

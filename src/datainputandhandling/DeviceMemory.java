@@ -117,24 +117,24 @@ public class DeviceMemory {
         if(checkSaveMemory(dd.ID)==null)
         {
             listToSave.add(dd);
-            try {
-                File file = new File(context+dd.ID+".txt");
+        }
+        try {
+            File file = new File(context+dd.ID+".txt");
 
-                // if file doesnt exists, then create it
-                if (!file.exists()) {
-                    file.createNewFile();
-                }
-
-                FileWriter fw = new FileWriter(file.getAbsoluteFile());
-                BufferedWriter bw = new BufferedWriter(fw);
-                bw.write("Name="+dd.deviceName+"\r\n");
-                bw.write("deviceCode="+dd.deviceCode+"\r\n");
-                bw.write("posX="+dd.locationX+"\r\n");
-                bw.write("posY="+dd.locationY);
-                bw.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            // if file doesnt exists, then create it
+            if (!file.exists()) {
+                file.createNewFile();
             }
+
+            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write("Name="+dd.deviceName+"\r\n");
+            bw.write("deviceCode="+dd.deviceCode+"\r\n");
+            bw.write("posX="+dd.locationX+"\r\n");
+            bw.write("posY="+dd.locationY);
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
     public void saveLinkList()

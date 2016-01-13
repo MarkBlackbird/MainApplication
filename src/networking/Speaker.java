@@ -54,7 +54,7 @@ public class Speaker extends Thread{
         deviceData=mp.dif.devmem.checkMemory(ID);
         if(deviceData==null)
         {
-            deviceData=new DeviceData();
+            deviceData=new DeviceData(this);
             deviceData.ID = ID;
             deviceData.deviceCode = deviceData.castIntToDeviceCode(in.readInt());
             deviceData.deviceName = in.readUTF();
@@ -74,6 +74,7 @@ public class Speaker extends Thread{
             {
                 throw new ConformityFailureException();
             }
+            deviceData.parent=this;
             mp.addExisting(this);
         }
         deviceData.lastTransmission=System.currentTimeMillis();
@@ -132,7 +133,7 @@ public class Speaker extends Thread{
     public void close() throws IOException
     {
         mp.dif.devmem.save(deviceData);
-        mp.jbArray[deviceData.locationX][deviceData.locationY].deActivate(this);
+        mp.jbArray[deviceData.locationY][deviceData.locationX].deActivate(this);
         int it=0;
         while(it<nh.speakers.size())
         {

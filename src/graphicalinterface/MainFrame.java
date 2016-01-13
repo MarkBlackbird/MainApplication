@@ -26,27 +26,25 @@ import networking.NetworkHandler;
  */
 public class MainFrame extends JFrame implements WindowListener{
     MapPanel mapPanel;
-    JPanel menuPanel;
+    MenuPanel menuPanel;
     public NetworkHandler nh;
     int sizeX, sizeY;
     public MainFrame()
     {
         DataFileInput dif = new DataFileInput("data.txt");
         
-        mapPanel = new MapPanel(this,dif);//todo create custom class
-        menuPanel = new JPanel();//todo create custom class
-        
-        //test lines delete after creating custom classes;
-        menuPanel.add(new JButton("Menu"));
+        mapPanel = new MapPanel(this,dif);
+        try {
+            menuPanel = new MenuPanel(this);
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         setLayout(new BorderLayout());
         add(mapPanel, BorderLayout.CENTER);
         add(menuPanel, BorderLayout.EAST);
         
-        pack();
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        Dimension dialogSize = getSize();
-        setLocation(screenSize.width/2-dialogSize.width/2, screenSize.height/2-dialogSize.height/2);
+        rebuild();
         
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -55,6 +53,13 @@ public class MainFrame extends JFrame implements WindowListener{
         nh = new NetworkHandler(10800,mapPanel);
     }
 
+    public void rebuild()
+    {
+        pack();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension dialogSize = getSize();
+        setLocation(screenSize.width/2-dialogSize.width/2, screenSize.height/2-dialogSize.height/2);
+    }
     @Override
     public void windowOpened(WindowEvent we) {}
 

@@ -47,7 +47,7 @@ public class MapPanel extends JPanel implements ActionListener{
 
     public void addExisting (Speaker sp)
     {
-        jbArray[sp.deviceData.locationX][sp.deviceData.locationY].forceActivate(sp);
+        jbArray[sp.deviceData.locationY][sp.deviceData.locationX].forceActivate(sp);
     }
     public void newArrival (Speaker sp)
     {
@@ -55,46 +55,50 @@ public class MapPanel extends JPanel implements ActionListener{
         if(!addingProcessInProgress)
         {
             addingProcessInProgress=true;
-            try {
-                continueAdding();
-            } catch (InterruptedException ex) {
-                Logger.getLogger(MapPanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            Adder ad = new Adder();
+            ad.start();
         }
     }
-    public void continueAdding () throws InterruptedException
+    private class Adder extends Thread 
     {
-        if(addingProcessInProgress)
+        @Override
+        public void run ()
         {
-            Speaker first;
-            while(!pending.isEmpty())
+            if(addingProcessInProgress)
             {
-                first=pending.get(0);
-                for(int i=0;i<dif.numY;i++)
+                Speaker first;
+                while(!pending.isEmpty())
                 {
-                    for(int j=0;j<dif.numX;j++)
+                    first=pending.get(0);
+                    for(int i=0;i<dif.numY;i++)
                     {
-                        jbArray[i][j].unlock();
+                        for(int j=0;j<dif.numX;j++)
+                        {
+                            jbArray[i][j].unlock();
+                        }
                     }
-                }
 
-                while(first==pending.get(0))
-                {
-                    Thread.sleep(500);
-                    if(pending.isEmpty())
+                    while(first==pending.get(0))
                     {
-                        addingProcessInProgress=false;
-                        break;
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(MapPanel.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        if(pending.isEmpty())
+                        {
+                            addingProcessInProgress=false;
+                            break;
+                        }
                     }
-                }
-                if(!pending.isEmpty())
-                {
+                    if(!pending.isEmpty())
+                    {
                     
+                    }
                 }
             }
         }
     }
-    
     private class EscapeException extends Exception
     {
         
@@ -109,6 +113,7 @@ public class MapPanel extends JPanel implements ActionListener{
                 {
                     if(ae.getSource()==jbArray[i][j])
                     {
+                        parent.menuPanel.newSelected(jbArray[i][j]);
                         jbArray[i][j].activate(pending.get(0));
                         throw new EscapeException();
                     }

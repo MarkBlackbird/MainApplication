@@ -102,6 +102,7 @@ public class Slot extends JButton{
             setIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[0]));
             setPressedIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[0]));
             setRolloverIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[0]));
+            sp.mp.parent.menuPanel.refresh();
         }
     }
 }
