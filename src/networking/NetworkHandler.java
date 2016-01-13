@@ -59,21 +59,40 @@ public class NetworkHandler extends Thread{
         }
         mp.dif.devmem.saveLinkList();
     }
+    private static boolean available(int port) {
+        boolean avb = true;
+        ServerSocket socket = null;
+        try {
+            socket = new ServerSocket(port);
+        } catch (IOException e) {
+            avb = false;
+        } finally {
+            if (socket != null)
+                try {
+                    socket.close();
+                } catch (IOException e) { /* e.printStackTrace(); */ }
+        }
+        return avb;
+    }
     private int findNextAvaiblePort()
     {
         int nextFreePort;
-        nextFreePort=portNumber+1;
-        int it=0;
-        while(it<speakers.size())
+        nextFreePort=portNumber;
+        do
         {
-            if(speakers.get(it).portNumber==nextFreePort)
+            nextFreePort++;
+            /*int it=0;
+            while(it<speakers.size())
             {
-                nextFreePort++;
-                it=0;
-            }else{
-                it++;
-            }
-        }
+                if(speakers.get(it).portNumber==nextFreePort)
+                {
+                    nextFreePort++;
+                    it=0;
+                }else{
+                    it++;
+                }
+            }*/
+        }while(!available(nextFreePort));
         return nextFreePort;
     }
     @Override
