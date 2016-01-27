@@ -75,17 +75,20 @@ public class MenuPanel extends JPanel implements ActionListener{
                 name.setText(activeSlot.sensor.get(activeOne).deviceName);
                 id.setText(activeSlot.sensor.get(activeOne).ID+"");
                 type.setText(activeSlot.sensor.get(activeOne).deviceCode.toString());
+                edit.setText((activeOne+1)+"/"+activeSlot.sensor.size());
             }else{
                 if(activeSlot.sensor.size()<=0)
                 {
                     name.setText("Empty");
                     id.setText("Empty");
                     type.setText("Empty");
+                    edit.setText("O");
                 }else{
                     activeOne=activeSlot.sensor.size()-1;
                     name.setText(activeSlot.sensor.get(activeOne).deviceName);
                     id.setText(activeSlot.sensor.get(activeOne).ID+"");
                     type.setText(activeSlot.sensor.get(activeOne).deviceCode.toString());
+                    edit.setText((activeOne+1)+"/"+activeSlot.sensor.size());
                 }
             }
             mf.rebuild();

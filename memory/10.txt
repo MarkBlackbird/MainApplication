@@ -1,0 +1,4 @@
+Name=Cisnienie
+deviceCode=UNKNOWN
+posX=0
+posY=0

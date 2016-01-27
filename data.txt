@@ -1,7 +1,7 @@
+numX=10
 numberOfImages=9
 mapNameArchive=mapData.txt
 iconNameArchive=iconData.txt
 portNumber=10800
-numX=10
 numY=6
 deviceMemoryLocation=memory\deviceList.txt

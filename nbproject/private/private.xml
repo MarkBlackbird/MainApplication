@@ -5,11 +5,11 @@
         <group>
             <file>file:/C:/Users/kosma/Documents/NetBeansProjects/MainApplication/src/datainputandhandling/DeviceMemory.java</file>
             <file>file:/C:/Users/kosma/Documents/NetBeansProjects/MainApplication/src/graphicalinterface/MenuPanel.java</file>
-            <file>file:/C:/Users/kosma/Documents/NetBeansProjects/MainApplication/src/networking/AlarmEvent.java</file>
             <file>file:/C:/Users/kosma/Documents/NetBeansProjects/MainApplication/src/networking/NetworkHandler.java</file>
+            <file>file:/C:/Users/kosma/Documents/NetBeansProjects/MainApplication/src/networking/AlarmEvent.java</file>
             <file>file:/C:/Users/kosma/Documents/NetBeansProjects/MainApplication/src/graphicalinterface/AlarmDialog.java</file>
-            <file>file:/C:/Users/kosma/Documents/NetBeansProjects/MainApplication/src/graphicalinterface/Slot.java</file>
             <file>file:/C:/Users/kosma/Documents/NetBeansProjects/MainApplication/src/graphicalinterface/MapPanel.java</file>
+            <file>file:/C:/Users/kosma/Documents/NetBeansProjects/MainApplication/src/graphicalinterface/Slot.java</file>
             <file>file:/C:/Users/kosma/Documents/NetBeansProjects/MainApplication/src/graphicalinterface/MainFrame.java</file>
             <file>file:/C:/Users/kosma/Documents/NetBeansProjects/MainApplication/src/networking/Speaker.java</file>
         </group>

@@ -13,6 +13,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -80,18 +82,7 @@ public class NetworkHandler extends Thread{
         nextFreePort=portNumber;
         do
         {
-            nextFreePort++;
-            /*int it=0;
-            while(it<speakers.size())
-            {
-                if(speakers.get(it).portNumber==nextFreePort)
-                {
-                    nextFreePort++;
-                    it=0;
-                }else{
-                    it++;
-                }
-            }*/
+            nextFreePort=(nextFreePort+1)%(65536-1024)+1024;
         }while(!available(nextFreePort));
         return nextFreePort;
     }
@@ -101,17 +92,33 @@ public class NetworkHandler extends Thread{
         while(on)
         {
             try{
-            while(connectionallowed)
-            {
-                serverSocket = new ServerSocket(portNumber);
-                clientSocket = serverSocket.accept();
-                out = new DataOutputStream(clientSocket.getOutputStream());
-                int nextFreePort=findNextAvaiblePort();
-                out.writeInt(nextFreePort);
-                speakers.add(new Speaker(nextFreePort++,mp,this));
-                serverSocket.close();
+                while(connectionallowed)
+                {
+                    serverSocket = new ServerSocket(portNumber);
+                    clientSocket = serverSocket.accept();
+                    out = new DataOutputStream(clientSocket.getOutputStream());
+                    int nextFreePort=findNextAvaiblePort();
+                    out.writeInt(nextFreePort);
+                    speakers.add(new Speaker(nextFreePort++,mp,this));
+                }
+            }catch(Exception e){
+                
+                try {
+                    if(out!=null)
+                        out.writeInt(65536); //invalid port number to inform of failure
+                } catch (IOException ex) {
+                    Logger.getLogger(NetworkHandler.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-            }catch(Exception e){}
+            finally
+            {
+                try {
+                    if(serverSocket!=null)
+                        serverSocket.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(NetworkHandler.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 }

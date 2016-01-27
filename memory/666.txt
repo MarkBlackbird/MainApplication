@@ -1,0 +1,4 @@
+Name=Wojtek
+deviceCode=UNKNOWN
+posX=3
+posY=2

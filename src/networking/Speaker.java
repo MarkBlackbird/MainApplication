@@ -51,7 +51,7 @@ public class Speaker extends Thread{
         in = new DataInputStream(clientSocket.getInputStream());
         
         int ID = in.readInt();
-        deviceData=mp.dif.devmem.checkMemory(ID);
+        deviceData=mp.dif.devmem.checkSaveMemory(ID);
         if(deviceData==null)
         {
             deviceData=new DeviceData(this);
@@ -59,28 +59,36 @@ public class Speaker extends Thread{
             deviceData.deviceCode = deviceData.castIntToDeviceCode(in.readInt());
             deviceData.deviceName = in.readUTF();
             newOne=true;
+            out.writeInt(1);
         }else{
-            if(deviceData.inUse)
-            {
-                throw new ConformityFailureException();
-            }else{
-                deviceData.inUse=true;
+            try{
+                if(deviceData.inUse)
+                {
+                    throw new ConformityFailureException();
+                }else{
+                    deviceData.inUse=true;
+                }
+                if(deviceData.castIntToDeviceCode(in.readInt())!=deviceData.deviceCode)
+                {
+                    throw new ConformityFailureException();
+                }
+                if(0<deviceData.deviceName.compareTo(in.readUTF()))
+                {
+                    throw new ConformityFailureException();
+                }
+                deviceData.parent=this;
+                mp.addExisting(this);
+                out.writeInt(1);
+            }catch(ConformityFailureException e){
+                out.writeInt(0);
+                clientSocket.close();
+                serverSocket.close();
+                throw e;
             }
-            if(deviceData.castIntToDeviceCode(in.readInt())!=deviceData.deviceCode)
-            {
-                throw new ConformityFailureException();
-            }
-            if(0<deviceData.deviceName.compareTo(in.readUTF()))
-            {
-                throw new ConformityFailureException();
-            }
-            deviceData.parent=this;
-            mp.addExisting(this);
         }
+        
         deviceData.lastTransmission=System.currentTimeMillis();
         start();
-        //aliche=new AliveChecker(this); useless junk do not use
-        //aliche.start();
         if(newOne)
             mp.newArrival(this);
         System.out.println("Connected with "+ deviceData.deviceName +" at port "+port);
@@ -133,7 +141,8 @@ public class Speaker extends Thread{
     public void close() throws IOException
     {
         mp.dif.devmem.save(deviceData);
-        mp.jbArray[deviceData.locationY][deviceData.locationX].deActivate(this);
+        if((deviceData.locationY>=0)&&(deviceData.locationX>=0))
+            mp.jbArray[deviceData.locationY][deviceData.locationX].deActivate(this);
         int it=0;
         while(it<nh.speakers.size())
         {
