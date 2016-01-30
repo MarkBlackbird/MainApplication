@@ -1,4 +1,4 @@
 Name=Termometr
 deviceCode=UNKNOWN
 posX=3
-posY=2
+posY=5

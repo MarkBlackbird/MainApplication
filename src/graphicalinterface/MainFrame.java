@@ -43,12 +43,13 @@ public class MainFrame extends JFrame implements WindowListener{
         setLayout(new BorderLayout());
         add(mapPanel, BorderLayout.CENTER);
         add(menuPanel, BorderLayout.EAST);
-        
-        rebuild();
-        
+
         setVisible(true);
+        setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         addWindowListener(this);
+        
+        rebuild();
         
         nh = new NetworkHandler(10800,mapPanel);
     }

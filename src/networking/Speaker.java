@@ -32,9 +32,7 @@ public class Speaker extends Thread{
     ServerSocket serverSocket;
     Socket clientSocket;
     public int portNumber;
-    long time;
     public DeviceData deviceData;
-    AliveChecker aliche;
     NetworkHandler nh;
     public MapPanel mp;
     List<AlarmEvent> alarmList = new ArrayList<AlarmEvent>();
@@ -93,23 +91,6 @@ public class Speaker extends Thread{
             mp.newArrival(this);
         System.out.println("Connected with "+ deviceData.deviceName +" at port "+port);
     }
-    public void sendEcho () throws IOException
-    {
-        if(out!=null)
-        {
-            echo=true;
-            time = System.currentTimeMillis();
-            out.writeInt(-1); //echo
-        }
-    }
-    public long receiveEcho () throws IOException
-    {
-        int ID_Received = in.readInt(); //not used
-        time-=System.currentTimeMillis();
-        System.out.println("Echoed for: "+(-time)+" with device "+ID_Received);
-        aliche.receiveEcho(-time, ID_Received);
-        return -time;
-    }
     public void setConAll (boolean p)
     {
         connectionallowed=p;
@@ -140,6 +121,7 @@ public class Speaker extends Thread{
     }
     public void close() throws IOException
     {
+        deviceData.inUse=false;
         mp.dif.devmem.save(deviceData);
         if((deviceData.locationY>=0)&&(deviceData.locationX>=0))
             mp.jbArray[deviceData.locationY][deviceData.locationX].deActivate(this);
@@ -159,9 +141,7 @@ public class Speaker extends Thread{
         {
             serverSocket.close();
         }
-        //aliche.close();
         on=false;
-        //sumthing sumthing save device
     }
     @Override
     public void run()
@@ -195,11 +175,6 @@ public class Speaker extends Thread{
                     case -1: //next is echo request
                     {
                         
-                        break;
-                    }
-                    case -2:
-                    {
-                        receiveEcho();       
                         break;
                     }
                  }

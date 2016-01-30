@@ -28,8 +28,10 @@ import javax.swing.JTextField;
  */
 public class AlarmDialog extends JDialog implements ActionListener{
     JButton closeButton;
+    MainFrame mf;
     public AlarmDialog (MainFrame mf, String str)
     {
+        this.mf=mf;
         try {
             //super(mf,str);
             createAndShowGUI(str);
@@ -66,6 +68,7 @@ public class AlarmDialog extends JDialog implements ActionListener{
     public void actionPerformed(ActionEvent ae) {
         if(ae.getSource()==closeButton)
         {
+            mf.rebuild();
             dispose();
         }
     }

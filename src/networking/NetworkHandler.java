@@ -82,7 +82,7 @@ public class NetworkHandler extends Thread{
         nextFreePort=portNumber;
         do
         {
-            nextFreePort=(nextFreePort+1)%(65536-1024)+1024;
+            nextFreePort=(65536+nextFreePort+1-2*1024)%(65536-1024)+1024;
         }while(!available(nextFreePort));
         return nextFreePort;
     }
@@ -103,12 +103,12 @@ public class NetworkHandler extends Thread{
                 }
             }catch(Exception e){
                 
-                try {
+                /*try {
                     if(out!=null)
                         out.writeInt(65536); //invalid port number to inform of failure
                 } catch (IOException ex) {
                     Logger.getLogger(NetworkHandler.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                }*/
             }
             finally
             {

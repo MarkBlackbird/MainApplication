@@ -25,9 +25,9 @@ public class AlarmEvent{
         RISK_OF_DEATH, DEATH, LONG_DELAY, DEVICE_DISCONNECTED_BY_USER,
         PATIENT_ASKS_FOR_ASSISTANCE, LOST
     }
-    int [] magnitude;
-    AlarmCode alarmCode;
-    MainFrame mf;
+    public int [] magnitude;
+    public AlarmCode alarmCode;
+    private MainFrame mf;
     public AlarmEvent(DeviceData origin, MainFrame mf)
     {
         this.mf=mf;

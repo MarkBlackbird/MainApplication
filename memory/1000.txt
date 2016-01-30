@@ -1,4 +1,4 @@
-Name=Cisnienie
+Name=Wojtek
 deviceCode=UNKNOWN
-posX=6
+posX=4
 posY=3

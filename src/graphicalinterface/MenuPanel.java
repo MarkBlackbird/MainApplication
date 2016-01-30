@@ -70,7 +70,7 @@ public class MenuPanel extends JPanel implements ActionListener{
         //loc.setText(activeSlot.posX+", "+activeSlot.posY);
         if(activeSlot!=null)
         {
-            if(activeSlot.sensor.size()>activeOne)
+            if((activeSlot.sensor.size()>activeOne)&&(activeSlot.sensor.size()>0))
             {
                 name.setText(activeSlot.sensor.get(activeOne).deviceName);
                 id.setText(activeSlot.sensor.get(activeOne).ID+"");
@@ -92,7 +92,6 @@ public class MenuPanel extends JPanel implements ActionListener{
                 }
             }
             mf.rebuild();
-        
         }
     }
 
@@ -123,6 +122,7 @@ public class MenuPanel extends JPanel implements ActionListener{
                         Speaker sp=activeSlot.sensor.get(activeOne).parent;
                         activeSlot.deActivate(sp);
                         mf.mapPanel.newArrival(sp);
+                        mf.rebuild();
                     }
                 }
             }
