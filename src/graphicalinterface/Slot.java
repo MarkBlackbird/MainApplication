@@ -37,17 +37,17 @@ public class Slot extends JButton{
         
         if(active)
         {
-            setIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[1]));
+            setIcon(new ImageIcon(dif.sih.getIcons(dif.map[this.posY][this.posX].type)[1]));
             
-            setRolloverIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[1]));
+            setRolloverIcon(new ImageIcon(dif.sih.getIcons(dif.map[this.posY][this.posX].type)[1]));
             
-            setPressedIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[1]));
+            setPressedIcon(new ImageIcon(dif.sih.getIcons(dif.map[this.posY][this.posX].type)[1]));
         }else{
-            setIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[0]));
+            setIcon(new ImageIcon(dif.sih.getIcons(dif.map[this.posY][this.posX].type)[0]));
             
-            setRolloverIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[0]));
+            setRolloverIcon(new ImageIcon(dif.sih.getIcons(dif.map[this.posY][this.posX].type)[0]));
             
-            setPressedIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[0]));
+            setPressedIcon(new ImageIcon(dif.sih.getIcons(dif.map[this.posY][this.posX].type)[0]));
         }
     }
     public void unlock()
@@ -57,7 +57,7 @@ public class Slot extends JButton{
             locked=false;
             if(!active)
             {
-                setRolloverIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[1]));
+                setRolloverIcon(new ImageIcon(dif.sih.getIcons(dif.map[this.posY][this.posX].type)[1]));
             }
         }
     }
@@ -68,7 +68,7 @@ public class Slot extends JButton{
             locked=true;
             if(!active)
             {
-                setRolloverIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[0]));
+                setRolloverIcon(new ImageIcon(dif.sih.getIcons(dif.map[this.posY][this.posX].type)[0]));
             }
         }
     }
@@ -81,17 +81,17 @@ public class Slot extends JButton{
             sensor.add(sp.deviceData);
             sp.deviceData.locationX=posX;
             sp.deviceData.locationY=posY;
-            setIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[1]));
-            setPressedIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[1]));
+            setIcon(new ImageIcon(dif.sih.getIcons(dif.map[this.posY][this.posX].type)[1]));
+            setPressedIcon(new ImageIcon(dif.sih.getIcons(dif.map[this.posY][this.posX].type)[1]));
         }
     }
     public void forceActivate(Speaker sp)
     {
         active=true;
         sensor.add(sp.deviceData);
-        setIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[1]));
-        setPressedIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[1]));
-        setRolloverIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[1]));
+        setIcon(new ImageIcon(dif.sih.getIcons(dif.map[this.posY][this.posX].type)[1]));
+        setPressedIcon(new ImageIcon(dif.sih.getIcons(dif.map[this.posY][this.posX].type)[1]));
+        setRolloverIcon(new ImageIcon(dif.sih.getIcons(dif.map[this.posY][this.posX].type)[1]));
     }
     public void deActivate(Speaker sp)
     {
@@ -99,9 +99,9 @@ public class Slot extends JButton{
         sensor.remove(sp.deviceData);
         if(sensor.size()==0)
         {
-            setIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[0]));
-            setPressedIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[0]));
-            setRolloverIcon(new ImageIcon(dif.sih.GetCurrentIcons(dif.map[this.posY][this.posX].type)[0]));
+            setIcon(new ImageIcon(dif.sih.getIcons(dif.map[this.posY][this.posX].type)[0]));
+            setPressedIcon(new ImageIcon(dif.sih.getIcons(dif.map[this.posY][this.posX].type)[0]));
+            setRolloverIcon(new ImageIcon(dif.sih.getIcons(dif.map[this.posY][this.posX].type)[0]));
             sp.mp.parent.menuPanel.refresh();
         }
     }

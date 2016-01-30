@@ -65,7 +65,7 @@ public class SlotIconHolder {
             // ex.printStackTrace();
         }
     }
-    public BufferedImage [] GetCurrentIcons (int number)
+    public BufferedImage [] getIcons (int number)
     {
         return imageArray[number];
     }
