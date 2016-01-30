@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
 
 /**
  *
- * @author kosma
+ * @author Marek Sienkiewicz
  */
 public class SlotIconHolder {
     BufferedImage [][] imageArray;

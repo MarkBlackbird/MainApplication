@@ -19,7 +19,7 @@ import networking.Speaker;
 
 /**
  *
- * @author kosma
+ * @author Marek Sienkiewicz
  */
 public class MapPanel extends JPanel implements ActionListener{
     public Slot [][]jbArray;

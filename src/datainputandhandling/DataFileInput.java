@@ -14,7 +14,7 @@ import java.io.IOException;
 
 /**
  *
- * @author Marek
+ * @author Karolina Szydziak
  */
 public class DataFileInput {
     public int numberOfImages,portNumber;

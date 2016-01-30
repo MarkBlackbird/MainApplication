@@ -22,7 +22,7 @@ import networking.NetworkHandler;
 
 /**
  *
- * @author kosma
+ * @author Marek Sienkiewicz
  */
 public class MainFrame extends JFrame implements WindowListener{
     MapPanel mapPanel;

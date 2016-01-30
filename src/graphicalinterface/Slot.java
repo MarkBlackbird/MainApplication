@@ -17,7 +17,7 @@ import networking.Speaker;
 
 /**
  *
- * @author kosma
+ * @author Marek Sienkiewicz
  */
 public class Slot extends JButton{
     DataFileInput dif;

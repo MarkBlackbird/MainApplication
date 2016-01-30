@@ -19,7 +19,7 @@ import networking.DeviceData;
 
 /**
  *
- * @author Marek Kos
+ * @author Karolina Szydziak
  */
 public class DeviceMemory {
     List<DeviceData> deviceList = new ArrayList<DeviceData>();

@@ -9,7 +9,7 @@ import networking.DeviceData;
 
 /**
  *
- * @author kosma
+ * @author Karolina Szydziak
  */
 public class MapCell {
     public int type;

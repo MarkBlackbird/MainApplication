@@ -24,7 +24,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author kosma
+ * @author Marek Sienkiewicz
  */
 public class AlarmDialog extends JDialog implements ActionListener{
     JButton closeButton;

@@ -20,7 +20,7 @@ import networking.Speaker;
 
 /**
  *
- * @author kosma
+ * @author Marek Sienkiewicz
  */
 public class MenuPanel extends JPanel implements ActionListener{
     int activeOne=0;
