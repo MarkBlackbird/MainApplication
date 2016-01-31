@@ -1,23 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package datainputandhandling;
 
 import networking.DeviceData;
 
 /**
- *
- * @author Karolina Szydziak
+ * Klasa przechowująca dane pojedynczej komórki mapy.
+ * Zawiera w sobie takie pola jak dane o przechowywanym urządzeniu i kod jego typu.
+ * @author Karolina
  */
 public class MapCell {
     public int type;
-    public DeviceData sensor;
+	
+	/**
+     * Konstruktor wpisujący typ pola
+     *
+     * @param type Parametr definiujący typ urządzenia.
+     */
     public MapCell(int type)
     {
         this.type=type;
     }
+	
+	/**
+     * Konstruktor losujący typ pola
+     *
+     * @param dif Parametr z danymi wczytanymi z pliku.
+     */
     public MapCell(DataFileInput dif)
     {
         type=(int)(Math.random()*dif.numberOfImages);

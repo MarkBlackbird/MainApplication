@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package datainputandhandling;
 
 import graphicalinterface.SlotIconHolder;
@@ -13,10 +7,12 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
+ * Klasa wczytująca parametry z pliku.
  *
- * @author Karolina Szydziak
+ * @author Karolina
  */
 public class DataFileInput {
+	
     public int numberOfImages,portNumber;
     public String mapNameArchive,iconNameArchive;
     boolean ready=false;
@@ -24,17 +20,20 @@ public class DataFileInput {
     public MapCell[][] map;
     public int numX, numY;
     public DeviceMemory devmem;
+	
+	/**
+     * Konstruktor pozwalający na bezpośrednie wczytanie danych z pliku o nazwie podanej w parametrze bezpośrednio przy tworzeniu obiektu.
+     *
+     * @param fileName Parametr definiujący nazwę pliku z jakiego mają zostać wczytane dane.
+     */
     public DataFileInput(String fileName)
     {
-        // This will reference one line at a time
         String line = null;
 
         try {
-            // FileReader reads text files in the default encoding.
             FileReader fileReader = 
                 new FileReader(fileName);
 
-            // Always wrap FileReader in BufferedReader.
             BufferedReader bufferedReader = 
                 new BufferedReader(fileReader);
 
@@ -67,13 +66,13 @@ public class DataFileInput {
                 }
             }	
 
-            // Always close files.
             bufferedReader.close();
             fileReader = new FileReader(mapNameArchive);
             bufferedReader = new BufferedReader(fileReader);
             sih= new SlotIconHolder(this);
             map=new MapCell[numY][numX];
-            for(int i=0;i<numY;i++)
+           
+		    for(int i=0;i<numY;i++)
             {
                 line = bufferedReader.readLine();
                 parts = line.split(",");
@@ -82,6 +81,7 @@ public class DataFileInput {
                     map[i][j]=new MapCell(Integer.parseInt(parts[j]));
                 }
             }
+			
             ready=true;
         }
         catch(FileNotFoundException ex) {
@@ -93,8 +93,6 @@ public class DataFileInput {
             System.out.println(
                 "Error reading file '" 
                 + fileName + "'");					
-            // Or we could just do this: 
-            // ex.printStackTrace();
         }
     }
 }

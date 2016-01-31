@@ -1,4 +1,4 @@
-Name=Wojtek
+Name=Kotek
 deviceCode=UNKNOWN
 posX=5
 posY=3

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package graphicalinterface;
 
 import datainputandhandling.DataFileInput;
@@ -15,23 +10,28 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /**
+ * Klasa przechowująca listę ikon.
+ * Zawiera dwuwymiarową tablicę wczytanych ikon.
  *
- * @author Marek Sienkiewicz
+ * @author Karolina
  */
 public class SlotIconHolder {
     BufferedImage [][] imageArray;
+	
+	/**
+     * Konstruktor pozwalający na załadowanie zdjęć z danych wczytanych z pliku.
+     *
+     * @param data Parametr zawierający dane wczytane z pliku.
+     */
     public SlotIconHolder (DataFileInput data)
     {
         imageArray=new BufferedImage[data.numberOfImages][3];
-        // This will reference one line at a time
         String line = null;
 
         try {
-            // FileReader reads text files in the default encoding.
             FileReader fileReader = 
                 new FileReader(data.iconNameArchive);
 
-            // Always wrap FileReader in BufferedReader.
             BufferedReader bufferedReader = 
                 new BufferedReader(fileReader);
 
@@ -44,12 +44,10 @@ public class SlotIconHolder {
                     imageArray[csi][0]=ImageIO.read(new File(dataPosition+line));
                     imageArray[csi][2]=imageArray[csi][0];
                     imageArray[csi][1]=ImageIO.read(new File(dataPosition+helper[0]+"_high."+helper[1]));
-                    //imageArray[csi][2]=ImageIO.read(new File(dataPosition+helper[0]+"_inverted."+helper[1]));
+                   
                     csi++;
                 }
             }	
-
-            // Always close files.
             bufferedReader.close();
         }
         catch(FileNotFoundException ex) {
@@ -61,10 +59,14 @@ public class SlotIconHolder {
             System.out.println(
                 "Error reading file '" 
                 + data.iconNameArchive + "'");					
-            // Or we could just do this: 
-            // ex.printStackTrace();
         }
     }
+	
+	/**
+     * Funkcja zwracająca serię obrazków odpowiadających danemu podanemu typowi segmentu mapy
+     *
+     * @param number Parametr informujący o typie Slotu dla którego zwracane są obrazy
+     */	
     public BufferedImage [] getIcons (int number)
     {
         return imageArray[number];
